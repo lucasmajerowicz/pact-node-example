@@ -1,0 +1,68 @@
+{
+  "consumer": {
+    "name": "My Consumer"
+  },
+  "provider": {
+    "name": "Posts Provider"
+  },
+  "interactions": [
+    {
+      "description": "a request for all posts",
+      "provider_state": "Has two posts",
+      "request": {
+        "method": "GET",
+        "path": "/post/list",
+        "headers": {
+          "Accept": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "posts": [
+            {
+              "id": 1,
+              "date": "01/10/2016",
+              "contents": "Bla bla bla"
+            },
+            {
+              "id": 2,
+              "date": "01/09/2016",
+              "contents": "Microservice microservice"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "description": "a request for one post",
+      "provider_state": "Has one post",
+      "request": {
+        "method": "GET",
+        "path": "/post/1",
+        "headers": {
+          "Accept": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "post": {
+            "id": 1,
+            "date": "01/08/2016",
+            "contents": "Bla"
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecificationVersion": "2.0.0"
+  }
+}
