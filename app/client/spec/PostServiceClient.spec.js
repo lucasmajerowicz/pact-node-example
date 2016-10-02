@@ -11,6 +11,9 @@ const expect = chai.expect;
 chai.use(chaiAsPromised);
 
 describe('Pact', () => {
+    let provider;
+
+    // Configure mock server
     const mockServer = wrapper.createServer({
         port: 1234,
         log: path.resolve(process.cwd(), 'logs', 'mockserver-integration.log'),
@@ -18,7 +21,7 @@ describe('Pact', () => {
         spec: 2
     });
 
-
+    // Define expected payloads
     const expectedBodyPostList = {
         posts: [
             {id: 1, date: '01/10/2016', contents: 'Bla bla bla'},
@@ -30,23 +33,13 @@ describe('Pact', () => {
         post: {id: 1, date: '01/08/2016', contents: 'Bla'}
     };
 
-    let provider;
-
-    after(() => {
-        console.log('3333');
-        provider.finalize().then(() => {
-            console.log('444');
-            wrapper.removeAllServers()
-
-        })
-    });
-
     before((done) => {
+
+        // Start mock server
         mockServer.start().then(() => {
             provider = Pact({consumer: 'My Consumer', provider: 'Posts Provider', port: 1234});
 
-            console.log('111');
-
+            // Add interactions
             provider.addInteraction({
                 state: 'Has two posts',
                 uponReceiving: 'a request for all posts',
@@ -79,9 +72,8 @@ describe('Pact', () => {
         })
     });
 
+    // Verify service client works as expected
     it('successfully receives all post', (done) => {
-        console.log('222');
-
         const postServiceClient = new PostServiceClient('http://localhost:1234');
         const verificationPromise = postServiceClient.getAllPosts();
         const expectedPosts = [
@@ -98,5 +90,13 @@ describe('Pact', () => {
         const expectedPost = Post.fromJson(expectedBodyPostGet.post);
 
         expect(verificationPromise).to.eventually.eql(expectedPost).notify(done);
+    });
+
+    after(() => {
+        // Write pact files
+        provider.finalize().then(() => {
+            wrapper.removeAllServers()
+
+        })
     });
 });
