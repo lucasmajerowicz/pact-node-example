@@ -1,8 +1,7 @@
-#Serverless Mesh Processing Microservice in Node.js
+#Better Testing of Microservices Using Consumer-Driven Contracts in Node.js
 ========
-### [Running Demo](https://lucasmajerowicz.github.io/serverless-mesh-processing/app/)
 
-### Accompanying blog post [here](http://hecodes.com/2016/09/building-serverless-mesh-processing-microservice-node-js/)
+### Accompanying blog post [here](http://hecodes.com/2016/10/better-testing-microservices-using-consumer-driven-contracts-node-js/)
 
 ## Installation
 Clone repository and run
@@ -12,8 +11,14 @@ npm install
 ```
 
 ## Usage
-Run client
+Run consumer-side tests
 
 ```
-npm run server
+mocha app/client/spec/PostServiceClient.spec.js
+```
+
+Run provider-side tests
+
+```
+node app/service/spec/PostService.spec.js
 ```
