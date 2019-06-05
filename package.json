@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "webpack-dev-server --host 0.0.0.0 --config webpack.config.js --devtool eval --progress --hot --inline"
+    "server": "webpack-dev-server --host 0.0.0.0 --config webpack.config.js --devtool eval --progress --hot --inline",
+    "test:pact-consumer": "mocha app/client/spec/PostServiceClient.spec.js",
+    "test:pact-provider": "node app/service/spec/PostService.spec.js"
   },
   "author": "",
   "license": "ISC",
