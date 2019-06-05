@@ -14,11 +14,11 @@ npm install
 Run consumer-side tests
 
 ```
-mocha app/client/spec/PostServiceClient.spec.js
+npm run test:pact-consumer
 ```
 
 Run provider-side tests
 
 ```
-node app/service/spec/PostService.spec.js
+npm run test:pact-provider
 ```
